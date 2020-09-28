@@ -5,12 +5,15 @@ from misadventure.lib import InvalidState, InvalidDirection, InvalidCommand, Col
 
 
 class RoomState:
-    def __init__(self, description: str = ''):
+    def __init__(self, description: str = '', *names: str):
         self.names = Collection()
         self.description = description if not description or len(description) == 0 else description.strip()
 
         self._directions = {}
         self.bag = Bag()
+
+        if len(names) > 0:
+            self.add_names(names)
 
     def __str__(self):
         return self.description
@@ -68,11 +71,11 @@ class Room(RoomState):
     """A generic room object that can be used by game code."""
     """Can have multiple states that can be switched"""
 
-    def __init__(self, description):
+    def __init__(self):
         self._current_state = None
         self._states = {}
 
-    def add_state(self, name: str, state: RoomState):
+    def add_state(self, name: str, state: RoomState, pass_directions=False):
         self._states[name] = state
 
     def get_state(self, name: str):
