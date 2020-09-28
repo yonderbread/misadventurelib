@@ -76,6 +76,10 @@ class LockedBag(Bag):
         self._key = key
         self.locked = locked
 
+    @property
+    def keycode(self):
+        return self._key
+
     def lock(self, key: str = ''):
         if type(key) is not str:
             raise TypeError(f'Key must be str, not {type(key)}')

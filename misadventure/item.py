@@ -1,3 +1,6 @@
+from misadventure.bag import LockedBag
+
+
 class Item:
     """A generic item object that can be referred to by a number of names."""
 
@@ -16,3 +19,14 @@ class Item:
 
     def __str__(self):
         return self.name
+
+
+class Key(Item):
+    def __init__(self, name, keycode, *aliases):
+        super().__init__(name, aliases)
+        self.keycode = keycode
+
+    def fits(self, lockable: LockedBag):
+        if lockable.keycode == self.keycode:
+            return True
+        return False
