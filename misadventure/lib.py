@@ -1,6 +1,14 @@
 import inspect
 import re
-from shutil import get_terminal_size
+
+try:
+    from shutil import get_terminal_size
+except ImportError:
+    try:
+        from backports.shutil_get_terminal_size import get_terminal_size
+    except ImportError:
+        def get_terminal_size(fallback=(80, 24)):
+            return fallback
 
 try:
     import readline
@@ -25,8 +33,13 @@ class InvalidEntry(Exception):
     """The entry specified could not be used in a Collection"""
 
 
+class InvalidState(Exception):
+    """The state name specified does not exist"""
+
+
 class Collection:
     """Similar to a bag except it is strictly used to store non-duplicate string values"""
+
     def __init__(self):
         self._collection = []
 

@@ -1,17 +1,22 @@
 from copy import deepcopy
 
 from misadventure.bag import Bag
-from misadventure.lib import InvalidDirection, InvalidCommand
+from misadventure.lib import InvalidState, InvalidDirection, InvalidCommand, Collection
 
 
 class RoomState:
     def __init__(self, description: str = ''):
-        self._directions = {}
-        self.names = []
+        self.names = Collection()
         self.description = description if not description or len(description) == 0 else description.strip()
 
-    def add_name(self, name):
+        self._directions = {}
+        self.bag = Bag()
 
+    def __str__(self):
+        return self.description
+
+    def add_names(self, *names):
+        self.names.add(names)
 
     def add_direction(self, forward, reverse):
         for direction in (forward, reverse):
@@ -25,26 +30,6 @@ class RoomState:
 
             setattr(self, forward, None)
             setattr(self, reverse, None)
-
-    def __str__(self):
-        return
-
-
-class Room:
-    """A generic room object that can be used by game code."""
-
-    _states = {}
-
-    def __init__(self, description):
-        self.description = description.strip()
-
-        # Copy class Bags to instance variables
-        for k, v in vars(type(self)).items():
-            if isinstance(v, Bag):
-                setattr(self, k, deepcopy(v))
-
-    def __str__(self):
-        return self.description
 
     def exit(self, direction):
         """Get the exit of a room in a given direction.
@@ -77,6 +62,34 @@ class Room:
     @property
     def directions(self):
         return self._directions
+
+
+class Room(RoomState):
+    """A generic room object that can be used by game code."""
+    """Can have multiple states that can be switched"""
+
+    def __init__(self, description):
+        self._current_state = None
+        self._states = {}
+
+    def add_state(self, name: str, state: RoomState):
+        self._states[name] = state
+
+    def get_state(self, name: str):
+        if name in self._states:
+            return self._states[name]
+        raise InvalidState(f'Room {self.names[0]} does not have a state called %r')
+
+    def set_state(self, name: str):
+        state = self.get_state(name)
+        if not state:
+            return False
+        self._current_state = state
+        return True
+
+    @property
+    def current_state(self):
+        return self._current_state
 
 
 Room.add_direction('north', 'south')

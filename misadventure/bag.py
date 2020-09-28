@@ -69,3 +69,25 @@ class Bag(set):
         if obj is not None:
             self.remove(obj)
         return obj
+
+
+class LockedBag(Bag):
+    def __init__(self, key: str = '', locked: bool = True):
+        self._key = key
+        self.locked = locked
+
+    def lock(self, key: str = ''):
+        if type(key) is not str:
+            raise TypeError(f'Key must be str, not {type(key)}')
+        if self.locked:
+            return False
+        self._key = key
+        return True
+
+    def unlock(self, key: str = ''):
+        if type(key) is not str:
+            raise TypeError(f'Key must be str, not {type(key)}')
+        if key == self._key:
+            self.locked = False
+            return True
+        return False
