@@ -1,5 +1,7 @@
 import inspect
 import re
+import sys
+import textwrap
 
 try:
     from shutil import get_terminal_size
