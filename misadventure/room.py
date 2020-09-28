@@ -5,15 +5,12 @@ from misadventure.lib import InvalidState, InvalidDirection, InvalidCommand, Col
 
 
 class RoomState:
-    def __init__(self, description: str = '', *names: str):
+    def __init__(self, description: str = ''):
         self.names = Collection()
         self.description = description if not description or len(description) == 0 else description.strip()
 
         self._directions = {}
         self.bag = Bag()
-
-        if len(names) > 0:
-            self.add_names(names)
 
     def __str__(self):
         return self.description
@@ -25,7 +22,7 @@ class RoomState:
         for direction in (forward, reverse):
             if not direction.islower():
                 raise InvalidCommand('Invalid direction %r: directions must be all lowercase.')
-            if direction in Room.directions:
+            if self._directions.keys().__contains__(direction):
                 raise KeyError('Direction %r is already defined.')
 
             self._directions[forward] = reverse
@@ -93,7 +90,3 @@ class Room(RoomState):
     @property
     def current_state(self):
         return self._current_state
-
-
-Room.add_direction('north', 'south')
-Room.add_direction('east', 'west')

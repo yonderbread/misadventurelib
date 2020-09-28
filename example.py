@@ -1,12 +1,3 @@
-# misadventurelib
->**A fork of adventurelib**
-
-This library aims to use a lot of the base functionality from the `adventurelib` library, but add a lot of useful features
-to easily make things in your text adventures more dynamic. One of the main issues I found while making games with `adventurelib`
-was that when you created a room, added directions and such, it was a real pain to make different room states that you could
-switch between. Here's a quick example of how `misadventurelib` addresses this problem.
-
-```py
 from misadventure.lib import *
 from misadventure.room import RoomState, Room
 
@@ -68,23 +59,3 @@ def turn_on_off(thing, state):
     look()
 
 start(help=False)
-```
-
-*And here's the result..*
-```bash
-> look
-You are in your livingroom. The lights are on.
-
-> turn light off
-You turned off the lights.
-You are in your livingroom. It is pitch black.
-You can't see a thing!
-
-> look
-You are in your livingroom. It is pitch black.
-You can't see a thing!
-
-> turn light on
-You turn the lights back on, much better!
-You are in your livingroom. The lights are on.
-```

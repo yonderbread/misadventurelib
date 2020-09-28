@@ -47,18 +47,18 @@ class Collection:
 
     def add(self, *args):
         for arg in args:
-            if not isinstance(arg, str):
+            if type(arg[0]) is not str:
                 raise InvalidEntry('%r is not a string')
-            if arg.lower() not in self._collection:
-                self._collection.append(arg)
+            if arg[0].lower() not in self._collection:
+                self._collection.append(arg[0])
             else:
                 raise InvalidEntry('%r already exists in the Collection, cannot add duplicates')
 
     def remove(self, *args):
         for arg in args:
-            if arg.lower() in self._collection:
+            if arg[0].lower() in self._collection:
                 try:
-                    index = self._collection.index(arg)
+                    index = self._collection.index(arg[0])
                 except ValueError:
                     raise InvalidEntry('%r was not found in the Collection')
 
