@@ -88,3 +88,5 @@ You can't see a thing!
 You turn the lights back on, much better!
 You are in your livingroom. The lights are on.
 ```
+
+## More features and documentation coming soon!
