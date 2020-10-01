@@ -71,6 +71,11 @@ class Room(RoomState):
     def __init__(self):
         self._current_state = None
         self._states = {}
+        
+    def __str__(self, state=None):
+        if not state:
+            return str(self._current_state)
+        return str(self._states[state])
 
     def add_state(self, name: str, state: RoomState, pass_directions=False):
         self._states[name] = state
@@ -88,5 +93,5 @@ class Room(RoomState):
         return True
 
     @property
-    def current_state(self):
+    def state(self):
         return self._current_state

@@ -39,7 +39,7 @@ def say_stuff(something):
 
 @when('look')
 def look():
-    print(current_room.current_state.description)
+    print(str(current_room))
 
 
 @when('turn THING STATE')
@@ -90,3 +90,7 @@ You are in your livingroom. The lights are on.
 ```
 
 ## More features and documentation coming soon!
+
+### TODO:
+- Add multiple transports for text adventures so that they aren't limited to just the terminal
+- Add Discord.py utils so you can play your text adventures in Discord!
