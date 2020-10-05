@@ -93,4 +93,4 @@ You are in your livingroom. The lights are on.
 
 ### TODO:
 - Add multiple transports for text adventures so that they aren't limited to just the terminal
-- Add Discord.py utils so you can play your text adventures in Discord!
+- ~~Add Discord.py utils so you can play your text adventures in Discord!~~
